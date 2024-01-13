@@ -38,6 +38,11 @@ module pilot_holes() {
     pilot_hole();
   translate([center_to_edge, -center_to_center_line, 0])
     pilot_hole();
+
+  module pilot_hole() {
+    translate([0,0, (-1/2)*INCH])
+    cylinder(d=pilot_hole_dia, h=(1)*INCH, $fn=32);
+  }
 }
 
 module front_alignment_mark() {
@@ -68,16 +73,11 @@ module pilot_hole_alignment_marks() {
   alignment_mark();
 }
 
-module pilot_hole() {
-  translate([0,0, (-1/2)*INCH])
-    cylinder(d=pilot_hole_dia, h=(1)*INCH, $fn=32);
-}
-
 module alignment_mark() {
+  linear_extrude((1)*INCH)
+    alignment_mark_profile();
+
   module alignment_mark_profile() {
     regular_ngon(n=3, od=(1/8)*INCH);
   }
-
-  linear_extrude((1)*INCH)
-    alignment_mark_profile();
 }
