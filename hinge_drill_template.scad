@@ -6,6 +6,20 @@ center_to_edge = (1+7/16)*INCH;
 center_to_center_line = (5/8)*INCH;
 pilot_hole_dia = (1/16)*INCH;
 
+depth = center_to_edge+(1/2)*INCH;
+
+
+module alignment_mark_profile() {
+  regular_ngon(n=3, od=(1/8)*INCH);
+}
+
+module front_alignment_mark() {
+  translate([depth-(0/16)*INCH, 0, 0])
+  rotate([0,0,180])
+  linear_extrude((1)*INCH)
+    alignment_mark_profile();
+}
+
 module pilot_hole() {
   translate([0,0, (-1/2)*INCH])
     cylinder(d=pilot_hole_dia, h=(1)*INCH, $fn=32);
@@ -20,7 +34,6 @@ module pilot_holes() {
 
 module base() {
   height = (3/8)*INCH;
-  depth = center_to_edge+(1/2)*INCH;
   width = 2*(center_to_center_line+(1/2)*INCH);
   // the plate
   translate([0, -width/2, 0])
@@ -35,6 +48,7 @@ module hinge_drill_template() {
   difference() {
     base();
     pilot_holes();
+    front_alignment_mark();
   }
 }
 
