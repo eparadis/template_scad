@@ -40,8 +40,8 @@ module base() {
     cube([depth, width, height]);
 
   // the edge stop
-  translate([(-1/2)*INCH, -width/2, 0])
-    cube([ (1/2)*INCH, width, height + (1/4)*INCH] );
+  translate([(-1/4)*INCH, -width/2, 0])
+    cube([ (1/4)*INCH, width, height + (1/4)*INCH] );
 }
 
 module hinge_drill_template() {
