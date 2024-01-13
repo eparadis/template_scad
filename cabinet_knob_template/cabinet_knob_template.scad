@@ -23,7 +23,7 @@ module cabinet_knob_template() {
 }
 
 module base() {
-  thickness = (3/8)*INCH;
+  thickness = (1/4)*INCH;
   // the plate
   cube([height, width, thickness]);
 
