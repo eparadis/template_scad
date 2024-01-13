@@ -7,7 +7,7 @@ center_to_center_line = (5/8)*INCH;
 pilot_hole_dia = (1/16)*INCH;
 
 depth = center_to_edge+(1/2)*INCH;
-
+stop_thickness = (1/4)*INCH;
 
 module alignment_mark_profile() {
   regular_ngon(n=3, od=(1/8)*INCH);
@@ -16,6 +16,12 @@ module alignment_mark_profile() {
 module front_alignment_mark() {
   translate([depth-(0/16)*INCH, 0, 0])
   rotate([0,0,180])
+  linear_extrude((1)*INCH)
+    alignment_mark_profile();
+}
+
+module back_alignment_mark() {
+  translate([-stop_thickness, 0, 0])
   linear_extrude((1)*INCH)
     alignment_mark_profile();
 }
@@ -40,8 +46,8 @@ module base() {
     cube([depth, width, height]);
 
   // the edge stop
-  translate([(-1/4)*INCH, -width/2, 0])
-    cube([ (1/4)*INCH, width, height + (1/4)*INCH] );
+  translate([ -stop_thickness, -width/2, 0])
+    cube([ stop_thickness, width, height + (1/4)*INCH] );
 }
 
 module hinge_drill_template() {
@@ -49,6 +55,7 @@ module hinge_drill_template() {
     base();
     pilot_holes();
     front_alignment_mark();
+    back_alignment_mark();
   }
 }
 
