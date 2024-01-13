@@ -2,13 +2,15 @@
 
 include <BOSL2/std.scad>
 
+// design parameters
 center_to_edge = (1+7/16)*INCH;
 center_to_center_line = (5/8)*INCH;
 pilot_hole_dia = (1/16)*INCH;
+stop_thickness = (1/4)*INCH;
 
+// derived parameters
 depth = center_to_edge+(1/2)*INCH;
 width = 2*(center_to_center_line+(1/2)*INCH);
-stop_thickness = (1/4)*INCH;
 
 hinge_drill_template();
 
