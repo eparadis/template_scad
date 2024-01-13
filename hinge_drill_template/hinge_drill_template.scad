@@ -10,13 +10,34 @@ depth = center_to_edge+(1/2)*INCH;
 width = 2*(center_to_center_line+(1/2)*INCH);
 stop_thickness = (1/4)*INCH;
 
-module alignment_mark() {
-  module alignment_mark_profile() {
-    regular_ngon(n=3, od=(1/8)*INCH);
-  }
+hinge_drill_template();
 
-  linear_extrude((1)*INCH)
-    alignment_mark_profile();
+module hinge_drill_template() {
+  difference() {
+    base();
+    pilot_holes();
+    front_alignment_mark();
+    back_alignment_mark();
+    pilot_hole_alignment_marks();
+  }
+}
+
+module base() {
+  height = (3/8)*INCH;
+  // the plate
+  translate([0, -width/2, 0])
+    cube([depth, width, height]);
+
+  // the edge stop
+  translate([ -stop_thickness, -width/2, 0])
+    cube([ stop_thickness, width, height + (1/4)*INCH] );
+}
+
+module pilot_holes() {
+  translate([center_to_edge, center_to_center_line, 0])
+    pilot_hole();
+  translate([center_to_edge, -center_to_center_line, 0])
+    pilot_hole();
 }
 
 module front_alignment_mark() {
@@ -52,32 +73,11 @@ module pilot_hole() {
     cylinder(d=pilot_hole_dia, h=(1)*INCH, $fn=32);
 }
 
-module pilot_holes() {
-  translate([center_to_edge, center_to_center_line, 0])
-    pilot_hole();
-  translate([center_to_edge, -center_to_center_line, 0])
-    pilot_hole();
-}
-
-module base() {
-  height = (3/8)*INCH;
-  // the plate
-  translate([0, -width/2, 0])
-    cube([depth, width, height]);
-
-  // the edge stop
-  translate([ -stop_thickness, -width/2, 0])
-    cube([ stop_thickness, width, height + (1/4)*INCH] );
-}
-
-module hinge_drill_template() {
-  difference() {
-    base();
-    pilot_holes();
-    front_alignment_mark();
-    back_alignment_mark();
-    pilot_hole_alignment_marks();
+module alignment_mark() {
+  module alignment_mark_profile() {
+    regular_ngon(n=3, od=(1/8)*INCH);
   }
-}
 
-hinge_drill_template();
+  linear_extrude((1)*INCH)
+    alignment_mark_profile();
+}
